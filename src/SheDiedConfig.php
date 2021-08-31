@@ -10,6 +10,7 @@ use SheDied\helpers\Lima;
 use SheDied\helpers\Enam;
 use SheDied\helpers\Tujuh;
 use SheDied\helpers\Wolu;
+use SheDied\helpers\Songo;
 
 class SheDieDConfig
 {
@@ -19,7 +20,7 @@ class SheDieDConfig
     /**
      * SITE DOMAIN adalah project yang aktif
      */
-    const SITE_DOMAIN = 'soundwooden.co';
+    const SITE_DOMAIN = 'appszone.us';
     const AUTHOR_ID = 1;
     const BOT_POST_INVTERVAL = 10; //minutes
 
@@ -43,6 +44,8 @@ class SheDieDConfig
                 self::$sources = Tujuh::sources();
             elseif (self::SITE_DOMAIN == Wolu::SWOODEN)
                 self::$sources = Wolu::sources();
+            elseif (self::SITE_DOMAIN == Songo::APPSZONE)
+                self::$sources = Songo::sources();
         }
     }
 

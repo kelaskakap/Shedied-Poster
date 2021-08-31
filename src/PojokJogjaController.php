@@ -16,6 +16,7 @@ use SheDied\helpers\Lima;
 use SheDied\helpers\Enam;
 use SheDied\helpers\Tujuh;
 use SheDied\helpers\Wolu;
+use SheDied\helpers\Songo;
 
 class PojokJogjaController extends Controller
 {
@@ -162,13 +163,11 @@ class PojokJogjaController extends Controller
 
         if (!$this->do_this_urls)
         {
-
             $params = WPWrapper::param_Query_for_Helper($helper);
             $helper->scanURL($this, $params);
 
             if (!$this->hijack && !$this->auto)
             {
-
                 $helper->fetchPostLinks($this);
             }
 
@@ -178,7 +177,6 @@ class PojokJogjaController extends Controller
             WPWrapper::update_param_Query_for_Helper($helper);
         } else
         {
-
             //sek
         }
     }
@@ -190,10 +188,8 @@ class PojokJogjaController extends Controller
 
         foreach ($post_links as $post_link)
         {
-
             if ($this->auto)
             {
-
                 $this->news_src = $post_link['src'];
                 $this->category = $post_link['cat'];
                 $helper->switchParsers($this);
@@ -204,7 +200,6 @@ class PojokJogjaController extends Controller
 
             if (!WPWrapper::get_page_by_title($title, 'OBJECT', $helper->getPostType()) && $helper->getParser())
             {
-
                 $new = $helper->getParser();
                 $parser = new $new;
                 $parser->setTitle($title)
@@ -224,7 +219,6 @@ class PojokJogjaController extends Controller
 
                 if (strlen($parser->getContent()) > 0 && $gallery)
                 {
-
                     CWriter::removeHtmlComments($parser);
 
                     if ($this->is_rewrite == "true")
@@ -280,7 +274,8 @@ class PojokJogjaController extends Controller
                             }
                         } elseif (SheDieDConfig::SITE_DOMAIN == Dua::AWESOMEDECORS_US
                                 OR SheDieDConfig::SITE_DOMAIN == Tujuh::FURNITUREIDEAS_US
-                                OR SheDieDConfig::SITE_DOMAIN == Wolu::SWOODEN)
+                                OR SheDieDConfig::SITE_DOMAIN == Wolu::SWOODEN
+                                OR SheDieDConfig::SITE_DOMAIN == Songo::APPSZONE)
                         {
 
                             WPWrapper::homedesigning_upload_gallery($parser, $new_draft_id);
@@ -394,7 +389,6 @@ class PojokJogjaController extends Controller
     {
         try
         {
-
             $base_date = new \DateTime(WPWrapper::current_time(), new \DateTimeZone(WPWrapper::get_option('timezone_string')));
             $post_interval = '+' . ((int) $this->interval['value'] * (int) $key) . ' ' . $this->interval['type'];
             $post_time = strtotime($post_interval, $base_date->getTimestamp());
@@ -414,7 +408,6 @@ class PojokJogjaController extends Controller
             return $post_id;
         } catch (\Exception $ex)
         {
-
             syslog(LOG_ERR, '[shedied poster] - gagal simpan berita ' . $parser->getTitle() . ' - ' . $ex->getMessage());
             return 0;
         }
@@ -428,8 +421,8 @@ class PojokJogjaController extends Controller
         {
             $this->count = 1;
             $this->post_links[] = [
-                'title' => 'tsBvxwUgBxsa',
-                'link' => 'https://design-milk.com/seeing-shapes-terrazzo-society6/'
+                'title' => 'abc1 ' . time(),
+                'link' => 'https://moddroid.com/prey-day-survival.html'
             ];
         }
 
@@ -475,6 +468,9 @@ class PojokJogjaController extends Controller
                 break;
             case Wolu::SWOODEN:
                 $helper = new Wolu();
+                break;
+            case Songo::APPSZONE:
+                $helper = new Songo();
                 break;
             default :
                 $helper = null;
