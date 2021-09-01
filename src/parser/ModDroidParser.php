@@ -22,7 +22,7 @@ class ModDroidParser extends AbstractParserWithGallery
         $doc = $this->curlGrabContent();
         $html = $this->make_DOM($doc);
 
-        $table = pq('main#primary table');
+        $table = pq('main#primary table:first');
         $table->removeAttr('*');
         $table->find('a[rel=tag]')->contentsUnwrap();
         $table->find('img')->removeAttr('style')->attr('src', 'https://appszone.us/wp-content/uploads/2021/08/google-play.png');

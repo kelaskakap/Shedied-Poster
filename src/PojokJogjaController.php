@@ -422,7 +422,7 @@ class PojokJogjaController extends Controller
             $this->count = 1;
             $this->post_links[] = [
                 'title' => 'abc1 ' . time(),
-                'link' => 'https://moddroid.com/prey-day-survival.html'
+                'link' => 'https://moddroid.com/weather-live.html'
             ];
         }
 
