@@ -8,7 +8,7 @@ function bot_appzone_sweeper()
     $count = 0;
     $max = 1;
     $start = 2;
-    $end = 25;
+    $end = 42;
     $current = (int) get_transient('appzone_next_sweep');
     $mapping = array_reverse(appzone_mapping(), TRUE);
 
@@ -97,7 +97,7 @@ function bot_appzone_run()
     $count = 0;
     $max = 1;
     $start = 2;
-    $end = 25;
+    $end = 42;
     $current = (int) get_transient('appzone_next_run');
     $mapping = array_reverse(appzone_mapping(), TRUE);
 
