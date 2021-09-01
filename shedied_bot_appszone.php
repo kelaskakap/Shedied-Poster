@@ -118,12 +118,12 @@ function bot_appzone_run()
         $frArrayName = "source_{$source}";
         $sources = SheDieDConfig::pick_Sources([$source], [$category]);
 
-        $fr = first_Run($frArrayName);
+        //$fr = first_Run($frArrayName);
         $helper = new Songo();
-        $helper->yesFirstRun($fr);
+        //$helper->yesFirstRun($fr);
 
         shedied_exec_bot($helper, $sources, 20, $transient, false);
-        update_first_Run($frArrayName, $helper->arrFirstRun());
+        //update_first_Run($frArrayName, $helper->arrFirstRun());
 
         next($mapping);
         set_transient('appzone_next_run', key($mapping));
