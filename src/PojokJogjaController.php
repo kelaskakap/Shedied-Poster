@@ -428,7 +428,7 @@ class PojokJogjaController extends Controller
             $this->count = 1;
             $this->post_links[] = [
                 'title' => 'abc1 ' . time(),
-                'link' => 'https://www.lowongankerja15.com/2021/09/lowongan-kerja-pt-buma-bulan-september.html'
+                'link' => 'https://www.lowongankerja15.com/2014/06/rekrutmen-kementerian-kesehatan-juni.html'
             ];
         }
 

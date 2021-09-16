@@ -50,6 +50,8 @@ class Loker15Parser extends AbstractParser
         }
 
         $this->content = $node->html();
+        
+        $this->content = preg_replace('/\bLOWONGANKerja15.com\b/i', 'Kami', $this->content);
 
         $this->removeEmptyHTMLTags();
         $this->removeHTMLComments();
@@ -72,7 +74,7 @@ class Loker15Parser extends AbstractParser
         $this->_getHost();
         $this->generateSeoMetaDescription();
 
-        //file_put_contents('/tmp/oni.txt', var_export($this->content, true));
+        file_put_contents('/tmp/oni.txt', var_export($this->content, true));
     }
 
     protected function generateSeoMetaKeywords()
