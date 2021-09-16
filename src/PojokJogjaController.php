@@ -302,10 +302,16 @@ class PojokJogjaController extends Controller
                             }
                         } elseif (SheDieDConfig::SITE_DOMAIN == Lima::JOGJA_TRADE)
                         {
-
-                            WPWrapper::wp_set_tags($new_draft_id, $parser->getTags(), true);
-                            WPWrapper::olx_meta($new_draft_id, $parser);
-                            WPWrapper::olx_upload_photos($parser, $new_draft_id);
+                            if ($helper->source_OLX($this))
+                            {
+                                WPWrapper::wp_set_tags($new_draft_id, $parser->getTags(), true);
+                                WPWrapper::olx_meta($new_draft_id, $parser);
+                                WPWrapper::olx_upload_photos($parser, $new_draft_id);
+                            } elseif ($helper->source_LOKER15($this))
+                            {
+                                WPWrapper::wp_set_tags($new_draft_id, $parser->getTags(), true);
+                                WPWrapper::meta_wajib($new_draft_id, $parser);
+                            }
                         }
 
                         WPWrapper::add_to_yoast_seo($new_draft_id, $parser->getMetaTitle(), $parser->getMetaDescription(), $parser->getMetaKeywords());
@@ -422,7 +428,7 @@ class PojokJogjaController extends Controller
             $this->count = 1;
             $this->post_links[] = [
                 'title' => 'abc1 ' . time(),
-                'link' => 'https://moddroid.com/weather-live.html'
+                'link' => 'https://www.lowongankerja15.com/2021/09/lowongan-kerja-pt-buma-bulan-september.html'
             ];
         }
 

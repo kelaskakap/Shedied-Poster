@@ -59,21 +59,26 @@ class WPWrapper
 
         if (SheDieDConfig::SITE_DOMAIN != Lima::JOGJA_TRADE)
         {
-
             $attach_id = media_sideload_image($parser->getFeaturedImage(), $post_id, null, 'id');
 
             return set_post_thumbnail($post_id, $attach_id);
         } else
         {
+            if ($parser instanceof OLXParser)
+            {
+                $content = strtolower($parser->getTitle());
+                $content = str_replace(' ', '-', $content);
 
-            $content = strtolower($parser->getTitle());
-            $content = str_replace(' ', '-', $content);
+                $xf['name'] = "{$content}-feature.jpg";
+                $xf['tmp_name'] = download_url($parser->getFeaturedImage());
 
-            $xf['name'] = "{$content}-feature.jpg";
-            $xf['tmp_name'] = download_url($parser->getFeaturedImage());
-
-            $attach_id = media_handle_sideload($xf, $post_id);
-            return set_post_thumbnail($post_id, $attach_id);
+                $attach_id = media_handle_sideload($xf, $post_id);
+                return set_post_thumbnail($post_id, $attach_id);
+            } else
+            {
+                //96 default media lowongan kerja
+                return set_post_thumbnail($post_id, 96);
+            }
         }
     }
 
@@ -346,6 +351,12 @@ class WPWrapper
         $meta_value['source'] = $parser->getUrl();
 
         add_post_meta($post_id, 'olx_meta', $meta_value);
+    }
+
+    public static function meta_wajib($post_id, InterfaceParser $parser)
+    {
+        update_post_meta($post_id, '_source_name', strtoupper($parser->getHost()));
+        update_post_meta($post_id, '_source_url', $parser->getUrl());
     }
 
     static public function homedesigning_update_post_with_gallery(AbstractParserWithGallery $parser, $post_id)

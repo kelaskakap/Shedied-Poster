@@ -429,6 +429,12 @@ abstract class AbstractParser implements InterfaceParser
         $this->content = $content;
     }
 
+    protected function removeHTMLComments()
+    {
+        $content = preg_replace('/<\!--.*?-->/', '', $this->content);
+        $this->content = $content;
+    }
+
     protected function alterBlockQuote()
     {
         if (preg_match_all('/<blockquote[^>]*>(.*?)<\/blockquote>/s', $this->content, $matches, PREG_PATTERN_ORDER))
