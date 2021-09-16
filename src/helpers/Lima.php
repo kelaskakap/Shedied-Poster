@@ -119,12 +119,12 @@ class Lima extends Numbers
         $sources[25] = ['name' => 'LOWONGANKERJA15 - CPNS KESEHATAN', 'url' => 'https://www.lowongankerja15.com/search/label/Kemenkes'];
         $sources[26] = ['name' => 'LOWONGANKERJA15 - CPNS KEMENKEU', 'url' => 'https://www.lowongankerja15.com/search/label/CPNS%20Kementerian%20Keuangan'];
         $sources[27] = ['name' => 'LOWONGANKERJA15 - CPNS KEMDIKBUD', 'url' => 'https://www.lowongankerja15.com/search/label/CPNS%20Kemendikbud'];
-        $sources[28] = ['name' => 'LOWONGANKERJA15 - CPNS BTN', 'url' => 'https://www.lowongankerja15.com/search/label/Bank%20BTN'];
-        $sources[29] = ['name' => 'LOWONGANKERJA15 - CPNS BNI', 'url' => 'https://www.lowongankerja15.com/search/label/Bank%20BNI'];
-        $sources[30] = ['name' => 'LOWONGANKERJA15 - CPNS BANK MANDIRI', 'url' => 'https://www.lowongankerja15.com/search/label/Bank%20Mandiri'];
-        $sources[31] = ['name' => 'LOWONGANKERJA15 - CPNS BRI', 'url' => 'https://www.lowongankerja15.com/search/label/Bank%20BRI'];
-        $sources[32] = ['name' => 'LOWONGANKERJA15 - CPNS BI', 'url' => 'https://www.lowongankerja15.com/search/label/Bank%20Indonesia'];
-        $sources[33] = ['name' => 'LOWONGANKERJA15 - CPNS BUMN', 'url' => 'https://www.lowongankerja15.com/search/label/BUMN'];
+        $sources[28] = ['name' => 'LOWONGANKERJA15 - BANK BTN', 'url' => 'https://www.lowongankerja15.com/search/label/Bank%20BTN'];
+        $sources[29] = ['name' => 'LOWONGANKERJA15 - BANK BNI', 'url' => 'https://www.lowongankerja15.com/search/label/Bank%20BNI'];
+        $sources[30] = ['name' => 'LOWONGANKERJA15 - BANK BANK MANDIRI', 'url' => 'https://www.lowongankerja15.com/search/label/Bank%20Mandiri'];
+        $sources[31] = ['name' => 'LOWONGANKERJA15 - BANK BRI', 'url' => 'https://www.lowongankerja15.com/search/label/Bank%20BRI'];
+        $sources[32] = ['name' => 'LOWONGANKERJA15 - BANK BI', 'url' => 'https://www.lowongankerja15.com/search/label/Bank%20Indonesia'];
+        $sources[33] = ['name' => 'LOWONGANKERJA15 - BUMN', 'url' => 'https://www.lowongankerja15.com/search/label/BUMN'];
 
         return $sources;
     }
