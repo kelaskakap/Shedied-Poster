@@ -125,6 +125,7 @@ function shedied_my_panel() {
         <th scope="row">Number of Posts</th>
         <td>
             <select name="number_of_posts">
+                <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="5">5</option>
                 <option value="10">10</option>

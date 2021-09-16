@@ -206,3 +206,4 @@ require_once 'shedied_bot_jogja.php';
 require_once 'shedied_bot_ngemie.php';
 require_once 'shedied_bot_furnitureideas.php';
 require_once 'shedied_bot_swooden.php';
+require_once 'shedied_bot_appszone.php';
