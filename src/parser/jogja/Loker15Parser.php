@@ -51,7 +51,7 @@ class Loker15Parser extends AbstractParser
 
         $this->content = $node->html();
         
-        $this->content = preg_replace('/\bLOWONGANKerja15.com\b/i', 'Kami', $this->content);
+        $this->content = preg_replace('/\bLOWONGANKerja15.com\b/i', 'JOGJA TRADING', $this->content);
 
         $this->removeEmptyHTMLTags();
         $this->removeHTMLComments();
