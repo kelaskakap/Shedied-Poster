@@ -7,7 +7,7 @@ function bot_jogja2022_sweeper()
 {
     $count = 0;
     $max = 1;
-    $start = 25;
+    $start = 13;
     $end = 33;
     $current = (int) get_transient('jogja2022_next_sweep');
     $mapping = array_reverse(jogja2022_mapping(), TRUE);
@@ -48,6 +48,7 @@ add_action('bot_jogja2022_sweeper', 'bot_jogja2022_sweeper');
 function jogja2022_mapping()
 {
     return [
+        13 => 34, //lowongan lokal jogja
         25 => 6,
         26 => 6,
         27 => 6,
@@ -64,7 +65,7 @@ function bot_jogja2022_run()
 {
     $count = 0;
     $max = 1;
-    $start = 25;
+    $start = 13;
     $end = 33;
     $current = (int) get_transient('jogja2022_next_run');
     $mapping = array_reverse(jogja2022_mapping(), TRUE);

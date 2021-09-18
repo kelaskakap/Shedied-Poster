@@ -306,7 +306,10 @@ class PojokJogjaController extends Controller
                             {
                                 WPWrapper::wp_set_tags($new_draft_id, $parser->getTags(), true);
                                 WPWrapper::olx_meta($new_draft_id, $parser);
-                                WPWrapper::olx_upload_photos($parser, $new_draft_id);
+                                if ($parser->getSourceCategory() != 13)
+                                {
+                                    WPWrapper::olx_upload_photos($parser, $new_draft_id);
+                                }
                             } elseif ($helper->source_LOKER15($this))
                             {
                                 WPWrapper::wp_set_tags($new_draft_id, $parser->getTags(), true);

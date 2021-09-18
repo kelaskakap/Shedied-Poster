@@ -66,14 +66,21 @@ class WPWrapper
         {
             if ($parser instanceof OLXParser)
             {
-                $content = strtolower($parser->getTitle());
-                $content = str_replace(' ', '-', $content);
+                if ($parser->getSourceCategory() != 13)
+                {
+                    $content = strtolower($parser->getTitle());
+                    $content = str_replace(' ', '-', $content);
 
-                $xf['name'] = "{$content}-feature.jpg";
-                $xf['tmp_name'] = download_url($parser->getFeaturedImage());
+                    $xf['name'] = "{$content}-feature.jpg";
+                    $xf['tmp_name'] = download_url($parser->getFeaturedImage());
 
-                $attach_id = media_handle_sideload($xf, $post_id);
-                return set_post_thumbnail($post_id, $attach_id);
+                    $attach_id = media_handle_sideload($xf, $post_id);
+                    return set_post_thumbnail($post_id, $attach_id);
+                } else
+                {
+                    //96 default media lowongan kerja
+                    return set_post_thumbnail($post_id, 96);
+                }
             } else
             {
                 //96 default media lowongan kerja
