@@ -67,8 +67,6 @@ class Loker15Parser extends AbstractParser
         $this->_getTags();
         $this->_getHost();
         $this->generateSeoMetaDescription();
-
-        file_put_contents('/tmp/oni.txt', var_export($this->content, true));
     }
 
     protected function generateSeoMetaKeywords()
