@@ -26,14 +26,8 @@ class Loker15Parser extends AbstractParser
         $node->find('h1')->remove();
         $node->find('img')->remove();
         $node->find('iframe')->remove();
-
-        foreach ($node->find('b') as $b)
-        {
-            if (pq($b)->text() == 'LOWONGANKERJA15.COM')
-            {
-                pq($b)->text('JOGJA TRADING');
-            }
-        }
+        $node->find('b')->contentsUnwrap();
+        $node->find('strong')->contentsUnwrap();
 
         foreach ($node->find('a') as $a)
         {
@@ -51,7 +45,7 @@ class Loker15Parser extends AbstractParser
 
         $this->content = $node->html();
         
-        $this->content = preg_replace('/\bLOWONGANKerja15.com\b/i', 'JOGJA TRADING', $this->content);
+        $this->content = preg_replace('/\blowongankerja15.com\b/i', 'JOGJA TRADING', $this->content);
 
         $this->removeEmptyHTMLTags();
         $this->removeHTMLComments();
