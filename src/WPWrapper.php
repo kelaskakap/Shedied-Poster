@@ -7,6 +7,7 @@ use SheDied\parser\AbstractParserWithGallery;
 use SheDied\parser\gadget\IGadget;
 use SheDied\parser\gadget\Gadget;
 use SheDied\parser\jogja\OLXParser;
+use SheDied\parser\jogja\Loker15Parser;
 use SheDied\helpers\Lima;
 use SheDied\SheDieDConfig;
 use SheDied\helpers\Numbers;
@@ -81,10 +82,20 @@ class WPWrapper
                     //96 default media lowongan kerja
                     return set_post_thumbnail($post_id, 96);
                 }
-            } else
+            } elseif ($parser instanceof Loker15Parser)
             {
                 //96 default media lowongan kerja
                 return set_post_thumbnail($post_id, 96);
+            } else
+            {
+                $content = strtolower($parser->getTitle());
+                $content = str_replace(' ', '-', $content);
+
+                $xf['name'] = "{$content}-feature.jpg";
+                $xf['tmp_name'] = download_url($parser->getFeaturedImage());
+
+                $attach_id = media_handle_sideload($xf, $post_id);
+                return set_post_thumbnail($post_id, $attach_id);
             }
         }
     }
@@ -187,14 +198,12 @@ class WPWrapper
 
     public static function homedesigning_upload_gallery(AbstractParserWithGallery $parser, $post_id)
     {
-
         require_once(ABSPATH . 'wp-admin/includes/media.php');
         require_once(ABSPATH . 'wp-admin/includes/file.php');
         require_once(ABSPATH . 'wp-admin/includes/image.php');
 
         foreach ($parser->getGallery() as $idx => $img)
         {
-
             //if ($key > 10)
             //    break;
 
@@ -217,7 +226,6 @@ class WPWrapper
 
             if ($parser->attach())
             {
-
                 //post dengan gallery wokwokwok
                 //update source image
                 $imghtml = wp_get_attachment_image($attach_id, 'full');
@@ -230,7 +238,6 @@ class WPWrapper
 
     static public function homedesigning_meta($post_id, $no_sidebar = false, $source, $url_source)
     {
-
         update_post_meta($post_id, '_gmr_sidebar_key', $no_sidebar);
         update_post_meta($post_id, '_source_name', strtoupper($source));
         update_post_meta($post_id, '_source_url', $url_source);
@@ -238,7 +245,6 @@ class WPWrapper
 
     public static function reviews_set_Gadget_Specs($post_id, IGadget $gadget)
     {
-
         $meta_value['review_tab_title'] = 'Specifications';
         $meta_value['review_tab_content'] = $gadget->specsTable();
 
@@ -247,17 +253,14 @@ class WPWrapper
 
     public static function reviews_CRON_set_Categories($post_id, InterfaceParser $gadget)
     {
-
         if (defined('DOING_CRON'))
         {
-
             wp_set_object_terms($post_id, $gadget->getCategoryId(), 'review-category');
         }
     }
 
     public static function reviews_set_Gadget_Support($post_id, IGadget $gadget)
     {
-
         $meta_value['review_tab_title'] = 'Support';
         $meta_value['review_tab_content'] = $gadget->getProductSupport();
 
@@ -266,7 +269,6 @@ class WPWrapper
 
     public static function reviews_set_Gadget_Photos($post_id, IGadget $gadget)
     {
-
         require_once(ABSPATH . 'wp-admin/includes/media.php');
         require_once(ABSPATH . 'wp-admin/includes/file.php');
         require_once(ABSPATH . 'wp-admin/includes/image.php');
@@ -368,10 +370,8 @@ class WPWrapper
 
     static public function homedesigning_update_post_with_gallery(AbstractParserWithGallery $parser, $post_id)
     {
-
         if ($parser->attach())
         {
-
             $post_with_imported_images = array(
                 'ID' => $post_id,
                 'post_content' => $parser->buildPostWithGallery(),

@@ -313,7 +313,6 @@ abstract class AbstractParser implements InterfaceParser
 
     public function toWordpressPost()
     {
-
         //post_category is an array
 
         return array(
@@ -336,21 +335,17 @@ abstract class AbstractParser implements InterfaceParser
 
     protected function curlGrabContent()
     {
-
         try
         {
-
             return $this->do_CURL($this->url);
         } catch (\Exception $ex)
         {
-
             syslog(LOG_DEBUG, '[shedied poster] - gagal grab konten - ' . $ex->getMessage());
         }
     }
 
     protected function do_CURL($url)
     {
-
         $ch = curl_init();
         $parse = parse_url($url);
         $host = $parse['host'];
@@ -509,7 +504,6 @@ abstract class AbstractParser implements InterfaceParser
      */
     protected function make_DOM($html)
     {
-
         if (function_exists('mb_convert_encoding'))
         {
 
@@ -525,7 +519,6 @@ abstract class AbstractParser implements InterfaceParser
      */
     public function logError($errors)
     {
-
         $log = __DIR__ . "/../../shedied.log";
 
         if (is_array($errors))
@@ -545,14 +538,12 @@ abstract class AbstractParser implements InterfaceParser
      */
     public function addCategoryId($id)
     {
-
         array_push($this->category_id, $id);
         return $this;
     }
 
     public function setLinkContent($param)
     {
-
         $this->link_content = $param;
         return $this;
     }

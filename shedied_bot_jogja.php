@@ -8,7 +8,7 @@ function bot_jogja2022_sweeper()
     $count = 0;
     $max = 1;
     $start = 13;
-    $end = 33;
+    $end = 36;
     $current = (int) get_transient('jogja2022_next_sweep');
     $mapping = array_reverse(jogja2022_mapping(), TRUE);
 
@@ -58,6 +58,8 @@ function jogja2022_mapping()
         31 => 7,
         32 => 7,
         33 => 8,
+        35 => 39,
+        36 => 33
     ];
 }
 
@@ -66,7 +68,7 @@ function bot_jogja2022_run()
     $count = 0;
     $max = 1;
     $start = 13;
-    $end = 33;
+    $end = 36;
     $current = (int) get_transient('jogja2022_next_run');
     $mapping = array_reverse(jogja2022_mapping(), TRUE);
 

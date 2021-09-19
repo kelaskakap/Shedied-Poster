@@ -25,6 +25,9 @@ class Lima extends Numbers
         } elseif ($this->source_LOKER15($controller))
         {
             $this->parser = 'SheDied\parser\jogja\Loker15Parser';
+        } elseif ($this->source_DETIK($controller))
+        {
+            $this->parser = 'SheDied\parser\DetikParser';
         }
     }
 
@@ -72,16 +75,32 @@ class Lima extends Numbers
                     break;
                 }
             }
-        }
+        } elseif ($this->source_DETIK($controller))
+        {
+            foreach ($node->find('div.section.nhl div.list-content article h3.media__title a.media__link') as $a)
+            {
+                $article = pq($a)->parents('article');
+                $link = $article->attr('i-link');
+                $title = pq($a)->text();
 
+                $postlinks[] = array("title" => trim($title), "link" => trim($link), 'src' => $controller->getNewsSrc(), 'cat' => $controller->getCategory());
+
+                if ($this->enough($postlinks, $controller) && !$controller->auto())
+                {
+                    break;
+                }
+            }
+        }
+        
         $controller->setPostLinks($postlinks);
     }
 
     static public function sources()
     {
-
         $sources = self::sources_olx();
         $sources += self::sources_loker15();
+        $sources += self::sources_DETIK();
+
         return $sources;
     }
 
@@ -129,6 +148,14 @@ class Lima extends Numbers
         return $sources;
     }
 
+    protected static function sources_DETIK()
+    {
+        $sources[35] = ['name' => 'DETIK - UMKM', 'url' => 'https://finance.detik.com/solusiukm?tag_from=wp_finance_secondnav_SolusiUKM'];
+        $sources[36] = ['name' => 'DETIK - FINANSIAL', 'url' => 'https://finance.detik.com/perencanaan-keuangan?tag_from=wp_finance_secondnav_Perencanaan%20Keuangan'];
+
+        return $sources;
+    }
+
     public function source_OLX(PojokJogjaController $controller)
     {
         return $controller->getNewsSrc() > 0 && $controller->getNewsSrc() < 24;
@@ -137,6 +164,11 @@ class Lima extends Numbers
     public function source_LOKER15(PojokJogjaController $controller)
     {
         return $controller->getNewsSrc() > 24 && $controller->getNewsSrc() < 34;
+    }
+
+    public function source_DETIK(PojokJogjaController $controller)
+    {
+        return $controller->getNewsSrc() > 34 && $controller->getNewsSrc() < 37;
     }
 
     public function scanURL(PojokJogjaController $controller, $params = array())
