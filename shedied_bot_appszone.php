@@ -27,7 +27,7 @@ function bot_appzone_sweeper()
         $count++;
         $transient = "tsnt_appzone_{$source}";
 
-        shedied_exec_bot(new Songo(), [], 1, $transient, true, 'publish');
+        shedied_exec_bot(new Songo(), [], 1, $transient, true, 'draft');
 
         next($mapping);
         set_transient('appzone_next_sweep', key($mapping));

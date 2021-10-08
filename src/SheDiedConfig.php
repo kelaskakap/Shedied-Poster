@@ -20,7 +20,7 @@ class SheDieDConfig
     /**
      * SITE DOMAIN adalah project yang aktif
      */
-    const SITE_DOMAIN = 'jogja.trade';
+    const SITE_DOMAIN = 'appszone.us';
     const AUTHOR_ID = 1;
     const BOT_POST_INVTERVAL = 10; //minutes
 
