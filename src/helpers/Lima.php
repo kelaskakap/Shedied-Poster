@@ -19,7 +19,16 @@ class Lima extends Numbers
     public function switchParsers(PojokJogjaController $controller)
     {
 
-        $this->parser = 'SheDied\parser\jogja\OLXParser';
+        if ($this->source_OLX($controller))
+        {
+            $this->parser = 'SheDied\parser\jogja\OLXParser';
+        } elseif ($this->source_LOKER15($controller))
+        {
+            $this->parser = 'SheDied\parser\jogja\Loker15Parser';
+        } elseif ($this->source_DETIK($controller))
+        {
+            $this->parser = 'SheDied\parser\DetikParser';
+        }
     }
 
     public function fetchPostLinks(PojokJogjaController $controller)
@@ -30,40 +39,73 @@ class Lima extends Numbers
 
         $node = \phpQuery::newDocument($doc);
 
-        foreach ($node->find('li.EIR5N a') as $a)
+        if ($this->source_OLX($controller))
         {
-
-            $link = pq($a)->attr('href');
-            $title = pq($a)->find('span[data-aut-id="itemTitle"]')->text();
-            $loc = pq($a)->find('span[data-aut-id="item-location"]')->text();
-
-            $title = $this->clean_whitespaces($title);
-            $loc = $this->clean_whitespaces($loc);
-            $linktitle = "{$title} - {$loc}";
-
-            $postlinks[] = array("title" => $linktitle, "link" => OLXParser::make_URL(trim($link)), 'src' => $controller->getNewsSrc(), 'cat' => $controller->getCategory());
-
-            if ($this->enough($postlinks, $controller) && !$controller->auto())
+            foreach ($node->find('li.EIR5N a') as $a)
             {
 
-                break;
+                $link = pq($a)->attr('href');
+                $title = pq($a)->find('span[data-aut-id="itemTitle"]')->text();
+                $loc = pq($a)->find('span[data-aut-id="item-location"]')->text();
+
+                $title = $this->clean_whitespaces($title);
+                $loc = $this->clean_whitespaces($loc);
+                $linktitle = "{$title} - {$loc}";
+
+                $postlinks[] = array("title" => $linktitle, "link" => OLXParser::make_URL(trim($link)), 'src' => $controller->getNewsSrc(), 'cat' => $controller->getCategory());
+
+                if ($this->enough($postlinks, $controller) && !$controller->auto())
+                {
+                    break;
+                }
+            }
+        } elseif ($this->source_LOKER15($controller))
+        {
+            $outer = $node->find('div.blog-posts.hfeed div.post-outer');
+
+            foreach ($outer->find('article h2.post-title a') as $a)
+            {
+                $link = pq($a)->attr('href');
+                $title = pq($a)->text();
+
+                $postlinks[] = array("title" => trim($title), "link" => trim($link), 'src' => $controller->getNewsSrc(), 'cat' => $controller->getCategory());
+
+                if ($this->enough($postlinks, $controller) && !$controller->auto())
+                {
+                    break;
+                }
+            }
+        } elseif ($this->source_DETIK($controller))
+        {
+            foreach ($node->find('div.section.nhl div.list-content article h3.media__title a.media__link') as $a)
+            {
+                $article = pq($a)->parents('article');
+                $link = $article->attr('i-link');
+                $title = pq($a)->text();
+
+                $postlinks[] = array("title" => trim($title), "link" => trim($link), 'src' => $controller->getNewsSrc(), 'cat' => $controller->getCategory());
+
+                if ($this->enough($postlinks, $controller) && !$controller->auto())
+                {
+                    break;
+                }
             }
         }
-
+        
         $controller->setPostLinks($postlinks);
     }
 
     static public function sources()
     {
-
         $sources = self::sources_olx();
+        $sources += self::sources_loker15();
+        $sources += self::sources_DETIK();
+
         return $sources;
     }
 
     protected static function sources_olx()
     {
-
-        #asus
         $sources[1] = ['name' => 'OLX - Mobil > Mobil Bekas', 'url' => 'https://www.olx.co.id/yogyakarta-di_g2000032/mobil-bekas_c198?sorting=desc-creation'];
         $sources[2] = ['name' => 'OLX - Mobil > Aksesori', 'url' => 'https://www.olx.co.id/yogyakarta-di_g2000032/aksesori_c4760?sorting=desc-creation'];
         $sources[3] = ['name' => 'OLX - Mobil > Audio Mobil', 'url' => 'https://www.olx.co.id/yogyakarta-di_g2000032/audio-mobil_c4762?sorting=desc-creation'];
@@ -89,6 +131,44 @@ class Lima extends Numbers
         $sources[23] = ['name' => 'OLX - Hobi & Olahraga > Hewan Peliharaan', 'url' => 'https://www.olx.co.id/yogyakarta-di_g2000032/hewan-peliharaan_c235?sorting=desc-creation'];
 
         return $sources;
+    }
+
+    protected static function sources_loker15()
+    {
+        $sources[25] = ['name' => 'LOWONGANKERJA15 - CPNS KESEHATAN', 'url' => 'https://www.lowongankerja15.com/search/label/Kemenkes'];
+        $sources[26] = ['name' => 'LOWONGANKERJA15 - CPNS KEMENKEU', 'url' => 'https://www.lowongankerja15.com/search/label/CPNS%20Kementerian%20Keuangan'];
+        $sources[27] = ['name' => 'LOWONGANKERJA15 - CPNS KEMDIKBUD', 'url' => 'https://www.lowongankerja15.com/search/label/CPNS%20Kemendikbud'];
+        $sources[28] = ['name' => 'LOWONGANKERJA15 - BANK BTN', 'url' => 'https://www.lowongankerja15.com/search/label/Bank%20BTN'];
+        $sources[29] = ['name' => 'LOWONGANKERJA15 - BANK BNI', 'url' => 'https://www.lowongankerja15.com/search/label/Bank%20BNI'];
+        $sources[30] = ['name' => 'LOWONGANKERJA15 - BANK BANK MANDIRI', 'url' => 'https://www.lowongankerja15.com/search/label/Bank%20Mandiri'];
+        $sources[31] = ['name' => 'LOWONGANKERJA15 - BANK BRI', 'url' => 'https://www.lowongankerja15.com/search/label/Bank%20BRI'];
+        $sources[32] = ['name' => 'LOWONGANKERJA15 - BANK BI', 'url' => 'https://www.lowongankerja15.com/search/label/Bank%20Indonesia'];
+        $sources[33] = ['name' => 'LOWONGANKERJA15 - BUMN', 'url' => 'https://www.lowongankerja15.com/search/label/BUMN'];
+
+        return $sources;
+    }
+
+    protected static function sources_DETIK()
+    {
+        $sources[35] = ['name' => 'DETIK - UMKM', 'url' => 'https://finance.detik.com/solusiukm?tag_from=wp_finance_secondnav_SolusiUKM'];
+        $sources[36] = ['name' => 'DETIK - FINANSIAL', 'url' => 'https://finance.detik.com/perencanaan-keuangan?tag_from=wp_finance_secondnav_Perencanaan%20Keuangan'];
+
+        return $sources;
+    }
+
+    public function source_OLX(PojokJogjaController $controller)
+    {
+        return $controller->getNewsSrc() > 0 && $controller->getNewsSrc() < 24;
+    }
+
+    public function source_LOKER15(PojokJogjaController $controller)
+    {
+        return $controller->getNewsSrc() > 24 && $controller->getNewsSrc() < 34;
+    }
+
+    public function source_DETIK(PojokJogjaController $controller)
+    {
+        return $controller->getNewsSrc() > 34 && $controller->getNewsSrc() < 37;
     }
 
     public function scanURL(PojokJogjaController $controller, $params = array())

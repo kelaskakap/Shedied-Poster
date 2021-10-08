@@ -245,15 +245,12 @@ class PojokJogjaController extends Controller
 
                     if ($new_draft_id > 0)
                     {
-
                         WPWrapper::generate_featured_image($parser, $new_draft_id);
 
                         if (SheDieDConfig::SITE_DOMAIN == Satu::LOKERKREASI_COM)
                         {
-
                             if ($parser->getHost() == 'jobstreet.co.id')
                             {
-
                                 WPWrapper::pojokjogja_set_source_for_jobstreet($new_draft_id, $parser->getHost(), $parser->getUrl(), $parser->getNamaPerusahaan());
                                 WPWrapper::pojokjogja_set_expdate_jobstreet($new_draft_id, $parser);
                                 WPWrapper::pojokjogja_set_tags_for_jobstreet($new_draft_id, $parser->getNamaPerusahaan(), $parser->getTags());
@@ -263,7 +260,6 @@ class PojokJogjaController extends Controller
 
                             if ($parser->getHost() == 'jobstreet.co.id')
                             {
-
                                 WPWrapper::pojokjogja_set_source_for_jobstreet($new_draft_id, $parser->getHost(), $parser->getUrl(), $parser->getNamaPerusahaan());
                                 WPWrapper::pojokjogja_set_expdate_jobstreet($new_draft_id, $parser);
                                 WPWrapper::pojokjogja_set_tags_for_jobstreet($new_draft_id, $parser->getNamaPerusahaan(), $parser->getTags());
@@ -283,10 +279,8 @@ class PojokJogjaController extends Controller
                             WPWrapper::homedesigning_meta($new_draft_id, false, $parser->getHost(), $parser->getUrl());
                         } elseif (SheDieDConfig::SITE_DOMAIN == Empat::TECHNOREVIEW_US)
                         {
-
                             if ($this->bulk_post_type == 'review')
                             {
-
                                 WPWrapper::reviews_CRON_set_Categories($new_draft_id, $parser);
                                 WPWrapper::reviews_set_Gadget_Specs($new_draft_id, $parser);
                                 WPWrapper::reviews_set_Gadget_Support($new_draft_id, $parser);
@@ -302,10 +296,25 @@ class PojokJogjaController extends Controller
                             }
                         } elseif (SheDieDConfig::SITE_DOMAIN == Lima::JOGJA_TRADE)
                         {
-
-                            WPWrapper::wp_set_tags($new_draft_id, $parser->getTags(), true);
-                            WPWrapper::olx_meta($new_draft_id, $parser);
-                            WPWrapper::olx_upload_photos($parser, $new_draft_id);
+                            if ($helper->source_OLX($this))
+                            {
+                                WPWrapper::wp_set_tags($new_draft_id, $parser->getTags(), true);
+                                WPWrapper::olx_meta($new_draft_id, $parser);
+                                if ($parser->getSourceCategory() != 13)
+                                {
+                                    WPWrapper::olx_upload_photos($parser, $new_draft_id);
+                                }
+                            } elseif ($helper->source_LOKER15($this))
+                            {
+                                WPWrapper::wp_set_tags($new_draft_id, $parser->getTags(), true);
+                                WPWrapper::meta_wajib($new_draft_id, $parser);
+                            } elseif ($helper->source_DETIK($this))
+                            {
+                                WPWrapper::homedesigning_upload_gallery($parser, $new_draft_id);
+                                WPWrapper::homedesigning_update_post_with_gallery($parser, $new_draft_id);
+                                WPWrapper::wp_set_tags($new_draft_id, $parser->getTags(), true);
+                                WPWrapper::meta_wajib($new_draft_id, $parser);
+                            }
                         }
 
                         WPWrapper::add_to_yoast_seo($new_draft_id, $parser->getMetaTitle(), $parser->getMetaDescription(), $parser->getMetaKeywords());
@@ -422,7 +431,7 @@ class PojokJogjaController extends Controller
             $this->count = 1;
             $this->post_links[] = [
                 'title' => 'abc1 ' . time(),
-                'link' => 'https://moddroid.com/weather-live.html'
+                'link' => 'https://finance.detik.com/perencanaan-keuangan/d-5717126/biar-mapan-di-umur-30-an-apa-sih-yang-perlu-disiapkan'
             ];
         }
 
