@@ -152,7 +152,10 @@ class Lima extends Numbers
     {
         $sources[35] = ['name' => 'DETIK - UMKM', 'url' => 'https://finance.detik.com/solusiukm?tag_from=wp_finance_secondnav_SolusiUKM'];
         $sources[36] = ['name' => 'DETIK - FINANSIAL', 'url' => 'https://finance.detik.com/perencanaan-keuangan?tag_from=wp_finance_secondnav_Perencanaan%20Keuangan'];
-
+        $sources[37] = ['name' => 'DETIK - LOWONGAN', 'url' => 'https://finance.detik.com/loker?tag_from=wp_finance_firstnav_Loker'];
+        $sources[38] = ['name' => 'DETIK - PROPERTI', 'url' => 'https://finance.detik.com/properti?tag_from=wp_finance_firstnav_Properti'];
+        $sources[39] = ['name' => 'DETIK - FINTECH', 'url' => 'https://finance.detik.com/fintech?tag_from=wp_finance_firstnav_Fintech'];
+        
         return $sources;
     }
 
@@ -168,7 +171,7 @@ class Lima extends Numbers
 
     public function source_DETIK(PojokJogjaController $controller)
     {
-        return $controller->getNewsSrc() > 34 && $controller->getNewsSrc() < 37;
+        return $controller->getNewsSrc() > 34 && $controller->getNewsSrc() < 40;
     }
 
     public function scanURL(PojokJogjaController $controller, $params = array())
