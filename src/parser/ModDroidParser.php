@@ -25,7 +25,7 @@ class ModDroidParser extends AbstractParserWithGallery
         $table = pq('main#primary table:first');
         $table->removeAttr('*');
         $table->find('a[rel=tag]')->contentsUnwrap();
-        $table->find('img')->removeAttr('style')->attr('src', 'https://appszone.us/wp-content/uploads/2021/08/google-play.png');
+        $table->find('img')->removeAttr('style')->attr('src', 'https://www.zoneapps.us/wp-content/uploads/2021/08/google-play.png');
         $this->spec_table = trim($table->htmlOuter());
 
         $dl = pq('main#primary > a.btn.btn-secondary.btn-block.mb-3');
@@ -170,6 +170,20 @@ class ModDroidParser extends AbstractParserWithGallery
         }
 
         return $content;
+    }
+
+    protected function curlGrabContent()
+    {
+        $context = stream_context_create(
+                array(
+                    "http" => array(
+                        "header" => "User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36"
+                    )
+                )
+        );
+        $doc = @file_get_contents($this->url, false, $context);
+
+        return $doc;
     }
 
 }
