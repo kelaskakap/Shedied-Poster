@@ -431,7 +431,7 @@ class PojokJogjaController extends Controller
             $this->count = 1;
             $this->post_links[] = [
                 'title' => 'abc1 ' . time(),
-                'link' => 'https://finance.detik.com/perencanaan-keuangan/d-5717126/biar-mapan-di-umur-30-an-apa-sih-yang-perlu-disiapkan'
+                'link' => 'https://finance.detik.com/lainnya/d-5770805/buruan-lamar-deretan-perusahaan-kelas-kakap-buka-lowongan-kerja-banyak?single=1'
             ];
         }
 
