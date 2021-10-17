@@ -79,9 +79,16 @@ class Lima extends Numbers
         {
             foreach ($node->find('div.section.nhl div.list-content article h3.media__title a.media__link') as $a)
             {
-                $article = pq($a)->parents('article');
-                $link = $article->attr('i-link');
                 $title = pq($a)->text();
+
+                if ($controller->getNewsSrc() == 37)
+                {
+                    $link = pq($a)->attr('href');
+                } else
+                {
+                    $article = pq($a)->parents('article');
+                    $link = $article->attr('i-link');
+                }
 
                 $postlinks[] = array("title" => trim($title), "link" => trim($link), 'src' => $controller->getNewsSrc(), 'cat' => $controller->getCategory());
 
@@ -91,7 +98,7 @@ class Lima extends Numbers
                 }
             }
         }
-        
+
         $controller->setPostLinks($postlinks);
     }
 
@@ -155,7 +162,7 @@ class Lima extends Numbers
         $sources[37] = ['name' => 'DETIK - LOWONGAN', 'url' => 'https://finance.detik.com/loker?tag_from=wp_finance_firstnav_Loker'];
         $sources[38] = ['name' => 'DETIK - PROPERTI', 'url' => 'https://finance.detik.com/properti?tag_from=wp_finance_firstnav_Properti'];
         $sources[39] = ['name' => 'DETIK - FINTECH', 'url' => 'https://finance.detik.com/fintech?tag_from=wp_finance_firstnav_Fintech'];
-        
+
         return $sources;
     }
 
