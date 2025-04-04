@@ -1,7 +1,6 @@
 /nbproject/
 /vendor/
 /.phpintel/
-*.zip
 *.xml
 !/phpunit.xml
 !/build.xml
