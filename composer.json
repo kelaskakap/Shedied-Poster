@@ -15,6 +15,6 @@
         }
     },
     "require": {
-        "electrolinux/phpquery": "^0.9.6"
+        "electrolinux/phpquery": "^0.9.7"
     }
 }
